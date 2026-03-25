@@ -1,20 +1,32 @@
 # 班级管理系统 (DD-CLASS)
 
-一个现代化的班级管理系统，使用 FastAPI 后端和 Vue3 前端构建，支持学生管理、成绩管理、考勤管理等核心功能。
+一个现代化的班级管理系统，使用 FastAPI 后端和 Vue3 前端构建，支持学生管理、成绩管理、考勤管理、积分系统等核心功能。
 
 ![Python](https://img.shields.io/badge/Python-3.9+-blue.svg)
 ![FastAPI](https://img.shields.io/badge/FastAPI-0.104+-green.svg)
 ![Vue.js](https://img.shields.io/badge/Vue.js-3.4+-42b883.svg)
 ![PostgreSQL](https://img.shields.io/badge/PostgreSQL-14+-336791.svg)
 ![License](https://img.shields.io/badge/License-Apache--2.0-blue.svg)
+[![Stars](https://img.shields.io/github/stars/joyapple/DD-CLASS?style=social)](https://github.com/joyapple/DD-CLASS/stargazers)
+[![Forks](https://img.shields.io/github/forks/joyapple/DD-CLASS?style=social)](https://github.com/joyapple/DD-CLASS/network/members)
 
-## � 系统预览
+---
+
+## ⭐ 支持这个项目
+
+**如果这个项目对您有帮助，请给我们一个 Star！** 🌟
+
+您的支持是我们继续开发和维护这个项目的最大动力！
+
+[![Star](https://img.shields.io/github/stars/joyapple/DD-CLASS?style=for-the-badge)](https://github.com/joyapple/DD-CLASS/stargazers)
+[![Fork](https://img.shields.io/github/forks/joyapple/DD-CLASS?style=for-the-badge)](https://github.com/joyapple/DD-CLASS/network/members)
+
+---
+
+## 🎉 系统预览
 
 ### Dashboard 数据仪表盘
 ![Dashboard 数据仪表盘](https://picui.ogmua.cn/s1/2026/03/24/69c2a7b335034.webp)
-
-### Dashboard 数据仪表盘
-![Dashboard](https://picui.ogmua.cn/s1/2026/03/24/69c2a7b38b934.webp)
 
 ### 学生管理
 ![学生管理](https://picui.ogmua.cn/s1/2026/03/24/69c2a7b3b291e.webp)
@@ -34,9 +46,15 @@
 ### 用户管理
 ![用户管理](https://picui.ogmua.cn/s1/2026/03/24/69c2a7bf98a28.webp)
 
+### 积分系统
+![积分系统](https://picui.ogmua.cn/s1/2026/03/25/points_system.webp)
+
+### 积分龙虎榜（投屏展示）
+![积分龙虎榜](https://picui.ogmua.cn/s1/2026/03/25/points_display.webp)
+
 ---
 
-## �📋 目录
+## 📋 目录
 
 - [功能介绍](#功能介绍)
 - [技术栈](#技术栈)
@@ -53,9 +71,10 @@
 ## 🎯 功能介绍
 
 ### 1. 用户认证与权限管理
-- ✅ 用户注册与登录（JWT Token认证）
-- ✅ 角色权限管理（管理员/教师）
+- ✅ 用户登录（JWT Token认证）
+- ✅ 角色权限管理（管理员/班主任/任课教师）
 - ✅ 班级访问权限控制
+- ✅ 操作日志记录
 
 ### 2. 班级管理
 - ✅ 创建、编辑、删除班级
@@ -87,11 +106,35 @@
 - ✅ 数据按学期筛选
 - ✅ 预设默认学期（2024-1至2025-2）
 
-### 7. 数据可视化
+### 7. 科目管理
+- ✅ 科目创建与管理
+- ✅ 科目与教师关联
+
+### 8. 数据可视化
 - ✅ Dashboard统计概览
 - ✅ 班级平均成绩排名
 - ✅ 学生成绩趋势分析
 - ✅ 考勤率统计
+
+### 9. 操作日志
+- ✅ 记录用户的关键操作（登录、创建、修改、删除）
+- ✅ 按操作类型、操作对象、日期范围筛选
+- ✅ 操作日志统计
+
+### 10. 积分系统 ✨
+- ✅ **积分规则配置**：支持考勤、成绩、行为、作业、竞赛等多个类别
+- ✅ **积分排行榜**：实时展示班级学生积分排名
+- ✅ **积分商城**：
+  - 虚拟商品（徽章、称号、特权等）
+  - 实物商品（文具、书籍、电影票等）
+- ✅ **积分兑换**：学生使用积分兑换商品
+- ✅ **积分龙虎榜**：炫酷的投屏展示界面，支持全屏模式
+- ✅ **权限控制**：所有教师都能给学生发放积分
+
+### 11. 用户管理
+- ✅ 三种角色：管理员、班主任、任课教师
+- ✅ 用户创建、编辑、删除
+- ✅ 班主任绑定班级
 
 ## 🛠 技术栈
 
@@ -150,10 +193,10 @@ source venv/bin/activate
 pip install -r requirements.txt
 
 # 启动后端服务
-python -m uvicorn app.main:app --host 0.0.0.0 --port 8000 --reload
+python -m uvicorn app.main:app --host 0.0.0.0 --port 8001 --reload
 ```
 
-后端启动后，访问 http://localhost:8000/docs 查看API文档
+后端启动后，访问 http://localhost:8001/docs 查看API文档
 
 ### 3. 启动前端
 
@@ -168,7 +211,7 @@ npm install
 npm run dev
 ```
 
-前端启动后，访问 http://localhost:3000
+前端启动后，访问 http://localhost:5173
 
 ### 4. 默认登录账户
 
@@ -254,7 +297,7 @@ class Settings(BaseSettings):
 ```javascript
 proxy: {
   '/api': {
-    target: 'http://your-backend-server:8000',
+    target: 'http://your-backend-server:8001',
     changeOrigin: true
   }
 }
@@ -262,7 +305,7 @@ proxy: {
 
 #### 开发环境端口
 
-默认前端运行在 3000 端口，后端运行在 8000 端口。
+默认前端运行在 5173 端口，后端运行在 8001 端口。
 
 ## 📖 使用指南
 
@@ -273,6 +316,25 @@ proxy: {
 3. **初始化数据**: 
    - 如果数据库为空，系统会自动初始化默认学期
    - 可以手动添加班级、学生等数据
+
+### 积分系统使用
+
+#### 教师发放积分
+1. 进入"积分系统"页面
+2. 点击"积分规则"标签
+3. 选择要发放的规则，点击"发放积分"
+4. 选择学生，确认发放
+
+#### 学生兑换商品
+1. 进入"积分系统"页面
+2. 点击"积分商城"标签
+3. 选择心仪的商品
+4. 点击"立即兑换"确认
+
+#### 投屏展示
+1. 进入"积分展示"页面
+2. 点击"全屏展示"按钮
+3. 可用于教室大屏展示
 
 ### 日常使用流程
 
@@ -335,15 +397,18 @@ DD-CLASS/
 │   ├── routers/                  # API路由
 │   │   ├── auth.py              # 认证相关API
 │   │   ├── classes.py           # 班级管理API
-│   │   ├── students.py          # 学生管理API
+│   │   ├── students.py           # 学生管理API
 │   │   ├── scores.py            # 成绩管理API
 │   │   ├── attendance.py        # 考勤管理API
 │   │   ├── semesters.py         # 学期管理API
 │   │   ├── subjects.py          # 科目管理API
-│   │   ├── dashboard.py         # 仪表盘API
-│   │   └── users.py             # 用户管理API
+│   │   ├── dashboard.py          # 仪表盘API
+│   │   ├── users.py             # 用户管理API
+│   │   ├── logs.py              # 操作日志API
+│   │   └── points.py            # 积分系统API
 │   ├── models.py                # 数据库模型
 │   ├── schemas.py               # Pydantic模型
+│   ├── services.py              # 业务服务层
 │   ├── auth.py                  # 认证逻辑
 │   ├── config.py                # 配置文件
 │   ├── database.py              # 数据库连接
@@ -360,15 +425,15 @@ DD-CLASS/
 │   └── vite.config.js          # Vite配置
 ├── .gitignore                   # Git忽略文件
 ├── requirements.txt             # Python依赖
-└── README.md                    # 项目说明文档
+└── README.md                   # 项目说明文档
 ```
 
 ## 📚 API文档
 
 启动后端服务后，访问以下地址查看完整API文档：
 
-- **Swagger UI**: http://localhost:8000/docs
-- **ReDoc**: http://localhost:8000/redoc
+- **Swagger UI**: http://localhost:8001/docs
+- **ReDoc**: http://localhost:8001/redoc
 
 ### 主要API端点
 
@@ -388,6 +453,10 @@ DD-CLASS/
 | 学期 | GET | /api/semesters | 获取学期列表 |
 | 学期 | POST | /api/semesters | 创建学期 |
 | 统计 | GET | /api/dashboard/stats | 获取统计数据 |
+| 日志 | GET | /api/logs | 获取操作日志 |
+| 积分 | GET | /api/points/stats | 获取积分统计 |
+| 积分 | GET | /api/points/ranking | 获取积分排行 |
+| 积分 | POST | /api/points/students/{id}/add | 发放积分 |
 
 ## 🗄 数据库迁移
 
@@ -408,10 +477,21 @@ python init_db.py
 python migrate_v2.py
 ```
 
+### 积分系统初始化
+
+运行积分系统相关脚本：
+
+```bash
+python create_points_tables.py
+python create_logs_table.py
+```
+
 ### 迁移脚本说明
 
 - `init_db.py`: 创建默认管理员账户和基础数据
 - `migrate_v2.py`: 数据库结构迁移（学期表、约束更新等）
+- `create_logs_table.py`: 创建操作日志表
+- `create_points_tables.py`: 创建积分系统相关表和默认数据
 
 ## ❓ 常见问题
 
@@ -447,15 +527,16 @@ python migrate_v2.py
 **问题**: `Port is already in use`
 
 **解决**:
+
 ```bash
 # Windows: 查找占用端口的进程
-netstat -ano | findstr :8000
+netstat -ano | findstr :8001
 
 # 结束进程
 taskkill /PID <进程ID> /F
 
 # 或使用其他端口启动
-python -m uvicorn app.main:app --port 8001
+python -m uvicorn app.main:app --port 8002
 ```
 
 ### 5. 依赖安装失败
@@ -463,6 +544,7 @@ python -m uvicorn app.main:app --port 8001
 **问题**: `pip install` 报错
 
 **解决**:
+
 ```bash
 # 升级pip
 python -m pip install --upgrade pip
@@ -470,6 +552,14 @@ python -m pip install --upgrade pip
 # 使用国内镜像
 pip install -r requirements.txt -i https://pypi.tuna.tsinghua.edu.cn/simple
 ```
+
+### 6. 积分发放失败
+
+**问题**: 提示"无权操作该学生"
+
+**解决**:
+- 确认当前用户是管理员、班主任或任课教师
+- 确认学生所在的班级在当前教师的权限范围内
 
 ## 📄 使用许可
 
@@ -508,7 +598,7 @@ limitations under the License.
 
 ### 注意事项
 
-1. 本项目仅供学习和教育目的使用
+1. 本项目完全开源免费，欢迎学习和使用
 2. 允许自由使用、修改和分发
 3. 商业使用请注明原作者和出处
 4. 作者不对使用本项目造成的任何损失负责
@@ -536,6 +626,21 @@ limitations under the License.
 - **GitHub Issues**: https://github.com/joyapple/DD-CLASS/issues
 - **作者**: joyapple
 
+---
+
+## 💖 感谢支持
+
+**如果您觉得这个项目对您有帮助，请：**
+
+1. **给项目点个 Star** ⭐ - 您的支持是我们最大的动力
+2. **Fork** 🍴 - 欢迎基于此项目开发自己的版本
+3. **提出建议** 💡 - 任何功能建议或问题都欢迎反馈
+4. **分享给更多人** 📢 - 让更多人知道这个项目
+
+**再次感谢您的支持！**
+
+---
+
 ## 🙏 致谢
 
 感谢以下开源项目的贡献：
@@ -548,8 +653,4 @@ limitations under the License.
 
 ---
 
-<div align="center">
-
-Made with ❤️ by [joyapple](https://github.com/joyapple)
-
-</div>
+**Made with ❤️ by [joyapple](https://github.com/joyapple)**

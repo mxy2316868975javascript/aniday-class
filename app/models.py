@@ -134,3 +134,85 @@ class OperationLog(Base):
     user_agent = Column(String, nullable=True)
     result = Column(String, default="success")
     created_at = Column(DateTime(timezone=True), server_default=func.now())
+
+class PointRule(Base):
+    """积分规则配置"""
+    __tablename__ = "point_rules"
+
+    id = Column(Integer, primary_key=True, index=True)
+    name = Column(String, nullable=False, unique=True)
+    description = Column(String, nullable=True)
+    category = Column(String, nullable=False)
+    points = Column(Integer, nullable=False)
+    condition_type = Column(String, nullable=False)
+    condition_value = Column(String, nullable=True)
+    is_active = Column(Boolean, default=True)
+    created_at = Column(DateTime(timezone=True), server_default=func.now())
+    updated_at = Column(DateTime(timezone=True), onupdate=func.now())
+
+class StudentPoint(Base):
+    """学生积分账户"""
+    __tablename__ = "student_points"
+
+    id = Column(Integer, primary_key=True, index=True)
+    student_id = Column(Integer, ForeignKey("students.id"), nullable=False, unique=True)
+    total_points = Column(Integer, default=0)
+    available_points = Column(Integer, default=0)
+    total_earned = Column(Integer, default=0)
+    total_spent = Column(Integer, default=0)
+    updated_at = Column(DateTime(timezone=True), server_default=func.now(), onupdate=func.now())
+
+    student = relationship("Student", backref="point_account")
+
+class PointRecord(Base):
+    """积分变动记录"""
+    __tablename__ = "point_records"
+
+    id = Column(Integer, primary_key=True, index=True)
+    student_id = Column(Integer, ForeignKey("students.id"), nullable=False)
+    rule_id = Column(Integer, ForeignKey("point_rules.id"), nullable=True)
+    points = Column(Integer, nullable=False)
+    balance_after = Column(Integer, nullable=False)
+    source_type = Column(String, nullable=False)
+    source_id = Column(Integer, nullable=True)
+    description = Column(String, nullable=True)
+    operator_id = Column(Integer, ForeignKey("users.id"), nullable=True)
+    created_at = Column(DateTime(timezone=True), server_default=func.now())
+
+    student = relationship("Student", backref="point_records")
+    rule = relationship("PointRule", backref="records")
+    operator = relationship("User", backref="point_operations")
+
+class PointItem(Base):
+    """积分商品"""
+    __tablename__ = "point_items"
+
+    id = Column(Integer, primary_key=True, index=True)
+    name = Column(String, nullable=False)
+    description = Column(String, nullable=True)
+    item_type = Column(String, nullable=False)
+    points_cost = Column(Integer, nullable=False)
+    stock = Column(Integer, default=-1)
+    image_url = Column(String, nullable=True)
+    is_active = Column(Boolean, default=True)
+    created_at = Column(DateTime(timezone=True), server_default=func.now())
+    updated_at = Column(DateTime(timezone=True), onupdate=func.now())
+
+class PointExchange(Base):
+    """积分兑换记录"""
+    __tablename__ = "point_exchanges"
+
+    id = Column(Integer, primary_key=True, index=True)
+    student_id = Column(Integer, ForeignKey("students.id"), nullable=False)
+    item_id = Column(Integer, ForeignKey("point_items.id"), nullable=False)
+    points_spent = Column(Integer, nullable=False)
+    quantity = Column(Integer, default=1)
+    status = Column(String, default="pending")
+    exchange_time = Column(DateTime(timezone=True), server_default=func.now())
+    pickup_time = Column(DateTime(timezone=True), nullable=True)
+    operator_id = Column(Integer, ForeignKey("users.id"), nullable=True)
+    remark = Column(String, nullable=True)
+
+    student = relationship("Student", backref="exchanges")
+    item = relationship("PointItem", backref="exchanges")
+    operator = relationship("User", backref="exchange_operations")

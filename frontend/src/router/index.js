@@ -74,6 +74,16 @@ const routes = [
         name: 'Logs',
         component: () => import('@/views/Logs.vue'),
         meta: { requiresAdmin: true }
+      },
+      {
+        path: 'points',
+        name: 'Points',
+        component: () => import('@/views/Points.vue')
+      },
+      {
+        path: 'points-display',
+        name: 'PointsDisplay',
+        component: () => import('@/views/PointsDisplay.vue')
       }
     ]
   }

@@ -74,6 +74,10 @@
           <el-icon><Clock /></el-icon>
           <template #title>操作日志</template>
         </el-menu-item>
+        <el-menu-item index="/points">
+          <el-icon><Coin /></el-icon>
+          <template #title>积分系统</template>
+        </el-menu-item>
       </el-menu>
 
       <div class="sidebar-footer" v-if="!isCollapsed">
@@ -153,6 +157,7 @@ import {
   SwitchButton,
   Collection,
   Clock,
+  Coin,
   Expand,
   Fold,
   Setting
@@ -178,7 +183,9 @@ const currentRouteName = computed(() => {
     '/users': '用户管理',
     '/subjects': '科目管理',
     '/semesters': '学期管理',
-    '/logs': '操作日志'
+    '/logs': '操作日志',
+    '/points': '积分系统',
+    '/points-display': '积分展示'
   }
   return routeMap[route.path] || '页面'
 })
