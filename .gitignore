@@ -46,3 +46,14 @@ Thumbs.db
 # Frontend
 frontend/dist/
 frontend/.vite/
+
+# Parent Portal
+parent-portal/dist/
+parent-portal/.vite/
+
+# Temp Files
+*.pyc
+create_*.py
+add_*.py
+test_*.py
+temp_*.py

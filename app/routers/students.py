@@ -48,7 +48,8 @@ def get_students(
             class_id=s.class_id,
             teacher_id=s.teacher_id,
             created_at=s.created_at,
-            class_name=class_obj.name if class_obj else None
+            class_name=class_obj.name if class_obj else None,
+            parent_code=s.parent_code
         ))
     
     return StudentListResponse(total=total, data=result)
@@ -96,7 +97,8 @@ def create_student(
         class_id=student.class_id,
         teacher_id=student.teacher_id,
         created_at=student.created_at,
-        class_name=class_obj.name if class_obj else None
+        class_name=class_obj.name if class_obj else None,
+        parent_code=student.parent_code
     )
 
 @router.get("/{student_id}", response_model=StudentResponse)
@@ -125,7 +127,8 @@ def get_student(
         class_id=student.class_id,
         teacher_id=student.teacher_id,
         created_at=student.created_at,
-        class_name=class_obj.name if class_obj else None
+        class_name=class_obj.name if class_obj else None,
+        parent_code=student.parent_code
     )
 
 @router.put("/{student_id}", response_model=StudentResponse)
@@ -183,7 +186,8 @@ def update_student(
         class_id=student.class_id,
         teacher_id=student.teacher_id,
         created_at=student.created_at,
-        class_name=class_obj.name if class_obj else None
+        class_name=class_obj.name if class_obj else None,
+        parent_code=student.parent_code
     )
 
 @router.delete("/{student_id}")

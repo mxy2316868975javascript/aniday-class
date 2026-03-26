@@ -148,6 +148,21 @@
 - ✅ 权限控制：管理员可发全校/班级通知，班主任/教师只能发本班通知
 - ✅ 未读标记：自动记录已读/未读状态，支持一键全部已读
 
+### 14. 家长端口 ✨
+- ✅ 家长码绑定：通过8位家长码快速绑定学生
+- ✅ 家长码生成：班主任可在学生管理中生成/重置家长码
+- ✅ 成绩查询：查看学生各科目成绩
+- ✅ 班级通知：查看班级和学校通知
+- ✅ 班级作业：查看班级作业和截止日期
+- ✅ 数据统计：查看平均成绩、出勤率等统计
+- ✅ 手机端适配：专为手机端优化的界面
+
+### 15. 系统设置 ✨
+- ✅ Bing每日一图：自动获取Bing每日背景图
+- ✅ 自定义登录背景：可上传自定义登录页面背景
+- ✅ 系统Logo：可自定义系统Logo
+- ✅ 系统名称：可自定义系统名称
+
 ## 🛠 技术栈
 
 ### 后端
@@ -409,15 +424,19 @@ DD-CLASS/
 │   ├── routers/                  # API路由
 │   │   ├── auth.py              # 认证相关API
 │   │   ├── classes.py           # 班级管理API
-│   │   ├── students.py           # 学生管理API
-│   │   ├── scores.py            # 成绩管理API
-│   │   ├── attendance.py        # 考勤管理API
+│   │   ├── students.py          # 学生管理API
+│   │   ├── scores.py             # 成绩管理API
+│   │   ├── attendance.py         # 考勤管理API
 │   │   ├── semesters.py         # 学期管理API
 │   │   ├── subjects.py          # 科目管理API
-│   │   ├── dashboard.py          # 仪表盘API
+│   │   ├── dashboard.py         # 仪表盘API
 │   │   ├── users.py             # 用户管理API
 │   │   ├── logs.py              # 操作日志API
-│   │   └── points.py            # 积分系统API
+│   │   ├── points.py            # 积分系统API
+│   │   ├── homework.py           # 作业管理API
+│   │   ├── notifications.py     # 通知中心API
+│   │   ├── parent.py             # 家长端口API
+│   │   └── settings.py          # 系统设置API
 │   ├── models.py                # 数据库模型
 │   ├── schemas.py               # Pydantic模型
 │   ├── services.py              # 业务服务层
@@ -425,11 +444,20 @@ DD-CLASS/
 │   ├── config.py                # 配置文件
 │   ├── database.py              # 数据库连接
 │   └── main.py                  # 应用入口
-├── frontend/                     # 前端应用
+├── frontend/                     # 前端应用（管理端）
 │   ├── src/
 │   │   ├── api/                # API客户端
 │   │   ├── router/             # 路由配置
 │   │   ├── stores/             # Pinia状态管理
+│   │   ├── views/              # 页面组件
+│   │   ├── App.vue             # 根组件
+│   │   └── main.js             # 入口文件
+│   ├── package.json             # 前端依赖
+│   └── vite.config.js          # Vite配置
+├── parent-portal/               # 家长端口（手机端）
+│   ├── src/
+│   │   ├── api/                # API客户端
+│   │   ├── router/             # 路由配置
 │   │   ├── views/              # 页面组件
 │   │   ├── App.vue             # 根组件
 │   │   └── main.js             # 入口文件

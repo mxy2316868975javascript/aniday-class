@@ -114,9 +114,23 @@
         <el-table-column prop="class_name" label="班级" />
         <el-table-column prop="phone" label="电话" />
         <el-table-column prop="parent_phone" label="家长电话" />
-        <el-table-column label="操作" width="200">
+        <el-table-column label="家长码" width="140">
+          <template #default="{ row }">
+            <el-tag v-if="row.parent_code" type="success" @click="copyParentCode(row.parent_code)" style="cursor: pointer;">
+              {{ row.parent_code }}
+            </el-tag>
+            <el-tag v-else type="info">未生成</el-tag>
+          </template>
+        </el-table-column>
+        <el-table-column label="操作" width="280">
           <template #default="{ row }">
             <el-button type="primary" size="small" @click="handleEdit(row)">编辑</el-button>
+            <el-button v-if="!row.parent_code" type="success" size="small" @click="generateParentCode(row)" :loading="row.generating">
+              生成家长码
+            </el-button>
+            <el-button v-else type="warning" size="small" @click="resetParentCode(row)" :loading="row.generating">
+              重置
+            </el-button>
             <el-button type="danger" size="small" @click="handleDelete(row)">删除</el-button>
           </template>
         </el-table-column>
@@ -520,6 +534,42 @@ const handleEdit = (row) => {
     address: row.address
   })
   dialogVisible.value = true
+}
+
+const copyParentCode = (code) => {
+  navigator.clipboard.writeText(code)
+  ElMessage.success(`家长码 ${code} 已复制到剪贴板`)
+}
+
+const generateParentCode = async (row) => {
+  try {
+    row.generating = true
+    const res = await axios.post(`${baseURL}/parent/students/${row.id}/generate-code`, {}, { headers: getAuthHeader() })
+    row.parent_code = res.data.parent_code
+    ElMessage.success(`家长码已生成：${res.data.parent_code}`)
+    loadStudents()
+  } catch (e) {
+    ElMessage.error('生成家长码失败：' + (e.response?.data?.detail || '未知错误'))
+  } finally {
+    row.generating = false
+  }
+}
+
+const resetParentCode = async (row) => {
+  try {
+    await ElMessageBox.confirm('确定要重置家长码吗？重置后旧码将失效！', '提示', { type: 'warning' })
+    row.generating = true
+    const res = await axios.post(`${baseURL}/parent/students/${row.id}/generate-code`, {}, { headers: getAuthHeader() })
+    row.parent_code = res.data.parent_code
+    ElMessage.success(`家长码已重置为：${res.data.parent_code}`)
+    loadStudents()
+  } catch (e) {
+    if (e !== 'cancel') {
+      ElMessage.error('重置家长码失败：' + (e.response?.data?.detail || '未知错误'))
+    }
+  } finally {
+    row.generating = false
+  }
 }
 
 const handleDelete = async (row) => {

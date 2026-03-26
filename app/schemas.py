@@ -105,6 +105,7 @@ class StudentResponse(StudentBase):
     teacher_id: Optional[int] = None
     created_at: datetime
     class_name: Optional[str] = None
+    parent_code: Optional[str] = None
 
     class Config:
         from_attributes = True

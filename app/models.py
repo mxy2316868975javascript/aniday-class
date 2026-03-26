@@ -59,6 +59,8 @@ class Student(Base):
     address = Column(String, nullable=True)
     class_id = Column(Integer, ForeignKey("classes.id"), nullable=False)
     teacher_id = Column(Integer, ForeignKey("users.id"), nullable=True)
+    parent_code = Column(String, unique=True, nullable=True, index=True)
+    parent_code_expires = Column(DateTime(timezone=True), nullable=True)
     created_at = Column(DateTime(timezone=True), server_default=func.now())
 
     __table_args__ = (
