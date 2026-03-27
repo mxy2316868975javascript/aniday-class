@@ -1,6 +1,6 @@
-# 家长端口 - DD-CLASS
+# 家长端口 - Aniday Class
 
-家长端口是 DD-CLASS 班级管理系统的子项目，供家长查看孩子相关信息。
+家长端口是 Aniday Class 班级管理系统的子项目，供家长查看孩子相关信息。
 
 ## 功能特点
 
@@ -98,4 +98,4 @@ parent-portal/
 | `/api/parent/homework/{code}` | GET | 获取作业列表 |
 | `/api/parent/stats/{code}` | GET | 获取统计数据 |
 
-详细 API 文档请参考主项目 DD-CLASS 的 API 文档。
+详细 API 文档请参考主项目 Aniday Class 的 API 文档。

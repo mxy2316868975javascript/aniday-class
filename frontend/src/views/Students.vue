@@ -1,32 +1,54 @@
 <template>
   <div class="students">
-    <div class="page-header">
-      <h1 class="page-title">学生管理</h1>
-      <div class="header-actions">
-        <el-button type="primary" @click="handleAdd">
+    <PageHeader
+      eyebrow="Student Registry"
+      title="学生管理"
+      subtitle="统一管理学生档案、筛选条件、家长码与批量导入操作。"
+    >
+      <template #actions>
+        <div class="header-actions">
+          <AppButton type="primary" @click="handleAdd">
           <el-icon><Plus /></el-icon>
           新增学生
-        </el-button>
-        <el-button type="success" @click="showBatchDialog = true">
+          </AppButton>
+          <AppButton type="success" @click="showBatchDialog = true">
           <el-icon><Upload /></el-icon>
           批量导入
-        </el-button>
-        <el-button type="warning" @click="showBatchEditDialog = true" :disabled="selectedStudents.length === 0">
+          </AppButton>
+          <AppButton type="warning" @click="showBatchEditDialog = true" :disabled="selectedStudents.length === 0">
           <el-icon><Edit /></el-icon>
           批量修改 ({{ selectedStudents.length }})
-        </el-button>
-        <el-button type="danger" @click="handleBatchDelete" :disabled="selectedStudents.length === 0">
+          </AppButton>
+          <AppButton type="danger" @click="handleBatchDelete" :disabled="selectedStudents.length === 0">
           <el-icon><Delete /></el-icon>
           批量删除 ({{ selectedStudents.length }})
-        </el-button>
-        <el-button type="info" @click="handleExportStudents" :loading="exportLoading">
+          </AppButton>
+          <AppButton type="info" @click="handleExportStudents" :loading="exportLoading">
           <el-icon><Download /></el-icon>
           导出学生
-        </el-button>
-      </div>
-    </div>
+          </AppButton>
+        </div>
+      </template>
+    </PageHeader>
     
-    <el-card class="filter-card" shadow="never">
+    <FilterBar
+      title="筛选与搜索"
+      description="保留高频筛选动作，并支持保存常用搜索条件，减少重复录入。"
+    >
+      <template #actions>
+        <el-button @click="showAdvancedFilter = !showAdvancedFilter" plain>
+          {{ showAdvancedFilter ? '收起筛选' : '展开高级筛选' }}
+          <el-icon>
+            <ArrowUp v-if="showAdvancedFilter" />
+            <ArrowDown v-else />
+          </el-icon>
+        </el-button>
+        
+        <el-tag v-if="activeFilterCount > 0" type="warning">
+          已设置 {{ activeFilterCount }} 个筛选条件
+        </el-tag>
+      </template>
+
       <el-form :model="filterForm" inline>
         <el-form-item label="筛选条件">
           <el-collapse-transition>
@@ -67,19 +89,6 @@
           </el-collapse-transition>
         </el-form-item>
         
-        <el-form-item>
-          <el-button @click="showAdvancedFilter = !showAdvancedFilter" type="default">
-            {{ showAdvancedFilter ? '收起筛选' : '展开高级筛选' }}
-            <el-icon>
-              <ArrowUp v-if="showAdvancedFilter" />
-              <ArrowDown v-else />
-            </el-icon>
-          </el-button>
-          
-          <el-tag v-if="activeFilterCount > 0" type="primary" style="margin-left: 10px;">
-            已设置 {{ activeFilterCount }} 个筛选条件
-          </el-tag>
-        </el-form-item>
       </el-form>
       
       <div v-if="savedSearches.length > 0" class="saved-searches">
@@ -98,9 +107,9 @@
           {{ search.name || `条件 ${index + 1}` }}
         </el-tag>
       </div>
-    </el-card>
+    </FilterBar>
 
-    <div class="table-container">
+    <DataTableShell>
       <el-table :data="students" style="width: 100%" v-loading="loading" @selection-change="handleSelectionChange">
         <el-table-column type="selection" width="55" />
         <el-table-column prop="id" label="ID" width="60" />
@@ -116,10 +125,14 @@
         <el-table-column prop="parent_phone" label="家长电话" />
         <el-table-column label="家长码" width="140">
           <template #default="{ row }">
-            <el-tag v-if="row.parent_code" type="success" @click="copyParentCode(row.parent_code)" style="cursor: pointer;">
-              {{ row.parent_code }}
-            </el-tag>
-            <el-tag v-else type="info">未生成</el-tag>
+            <StatusBadge
+              v-if="row.parent_code"
+              type="success"
+              :label="row.parent_code"
+              style="cursor: pointer;"
+              @click="copyParentCode(row.parent_code)"
+            />
+            <StatusBadge v-else type="info" label="未生成" />
           </template>
         </el-table-column>
         <el-table-column label="操作" width="280">
@@ -136,17 +149,18 @@
         </el-table-column>
       </el-table>
       
-      <el-pagination
-        v-model:current-page="page"
-        v-model:page-size="pageSize"
-        :total="total"
-        :page-sizes="[10, 20, 50]"
-        layout="total, sizes, prev, pager, next"
-        @size-change="loadStudents"
-        @current-change="loadStudents"
-        style="margin-top: 20px; justify-content: flex-end;"
-      />
-    </div>
+      <template #pagination>
+        <el-pagination
+          v-model:current-page="page"
+          v-model:page-size="pageSize"
+          :total="total"
+          :page-sizes="[10, 20, 50]"
+          layout="total, sizes, prev, pager, next"
+          @size-change="loadStudents"
+          @current-change="loadStudents"
+        />
+      </template>
+    </DataTableShell>
 
     <el-dialog v-model="dialogVisible" :title="isEdit ? '编辑学生' : '新增学生'" width="600px">
       <el-form :model="form" :rules="rules" ref="formRef" label-width="100px">
@@ -411,6 +425,11 @@ import { Plus, Upload, UploadFilled, Download, Document, CircleCheck, CircleClos
 import axios from 'axios'
 import api from '@/api'
 import * as XLSX from 'xlsx'
+import AppButton from '@/components/ui/AppButton.vue'
+import DataTableShell from '@/components/ui/DataTableShell.vue'
+import FilterBar from '@/components/ui/FilterBar.vue'
+import PageHeader from '@/components/ui/PageHeader.vue'
+import StatusBadge from '@/components/ui/StatusBadge.vue'
 
 const baseURL = '/api'
 
@@ -1105,60 +1124,38 @@ onMounted(async () => {
 
 <style scoped>
 .students {
-  padding: 20px;
-}
-
-.page-header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin-bottom: 20px;
-}
-
-.page-title {
-  margin: 0;
-  font-size: 24px;
-  font-weight: 600;
-  color: #303133;
+  display: grid;
+  gap: var(--space-5);
 }
 
 .header-actions {
   display: flex;
-  gap: 10px;
-}
-
-.filter-card {
-  margin-bottom: 20px;
+  gap: 0.75rem;
+  flex-wrap: wrap;
 }
 
 .advanced-filter {
   display: flex;
   flex-wrap: wrap;
-  gap: 15px;
-  padding: 15px 0;
+  gap: 1rem;
+  padding: 0.75rem 0 0;
 }
 
 .saved-searches {
-  margin-top: 15px;
-  padding-top: 15px;
-  border-top: 1px solid #ebeef5;
+  margin-top: 1rem;
+  padding-top: 1rem;
+  border-top: 1px solid var(--border-soft);
 }
 
 .saved-search-tag {
-  margin-right: 10px;
-  margin-bottom: 8px;
+  margin-right: 0.5rem;
+  margin-bottom: 0.5rem;
   cursor: pointer;
   transition: all 0.3s;
 }
 
 .saved-search-tag:hover {
   transform: translateY(-2px);
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
-}
-
-.table-container {
-  background: white;
-  padding: 20px;
-  border-radius: 4px;
+  box-shadow: var(--shadow-card);
 }
 </style>

@@ -1,4 +1,4 @@
-# 班级管理系统 (DD-CLASS)
+# 班级管理系统 (Aniday Class)
 
 一个现代化的班级管理系统，使用 FastAPI 后端和 Vue3 前端构建，支持学生管理、成绩管理、考勤管理、积分系统等核心功能。
 
@@ -7,8 +7,8 @@
 ![Vue.js](https://img.shields.io/badge/Vue.js-3.4+-42b883.svg)
 ![PostgreSQL](https://img.shields.io/badge/PostgreSQL-14+-336791.svg)
 ![License](https://img.shields.io/badge/License-Apache--2.0-blue.svg)
-[![Stars](https://img.shields.io/github/stars/joyapple/DD-CLASS?style=social)](https://github.com/joyapple/DD-CLASS/stargazers)
-[![Forks](https://img.shields.io/github/forks/joyapple/DD-CLASS?style=social)](https://github.com/joyapple/DD-CLASS/network/members)
+[![Stars](https://img.shields.io/github/stars/joyapple/Aniday Class?style=social)](https://github.com/joyapple/Aniday Class/stargazers)
+[![Forks](https://img.shields.io/github/forks/joyapple/Aniday Class?style=social)](https://github.com/joyapple/Aniday Class/network/members)
 
 ---
 
@@ -18,8 +18,8 @@
 
 您的支持是我们继续开发和维护这个项目的最大动力！
 
-[![Star](https://img.shields.io/github/stars/joyapple/DD-CLASS?style=for-the-badge)](https://github.com/joyapple/DD-CLASS/stargazers)
-[![Fork](https://img.shields.io/github/forks/joyapple/DD-CLASS?style=for-the-badge)](https://github.com/joyapple/DD-CLASS/network/members)
+[![Star](https://img.shields.io/github/stars/joyapple/Aniday Class?style=for-the-badge)](https://github.com/joyapple/Aniday Class/stargazers)
+[![Fork](https://img.shields.io/github/forks/joyapple/Aniday Class?style=for-the-badge)](https://github.com/joyapple/Aniday Class/network/members)
 
 ---
 
@@ -197,8 +197,8 @@
 ### 1. 克隆项目
 
 ```bash
-git clone https://github.com/joyapple/DD-CLASS.git
-cd DD-CLASS
+git clone https://github.com/joyapple/Aniday Class.git
+cd Aniday Class
 ```
 
 ### 2. 启动后端
@@ -419,7 +419,7 @@ proxy: {
 ## 📁 项目结构
 
 ```
-DD-CLASS/
+Aniday Class/
 ├── app/                          # 后端应用
 │   ├── routers/                  # API路由
 │   │   ├── auth.py              # 认证相关API
@@ -611,7 +611,7 @@ pip install -r requirements.txt -i https://pypi.tuna.tsinghua.edu.cn/simple
 
 Apache License 2.0
 
-Copyright 2024 DD-CLASS
+Copyright 2024 Aniday Class
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -663,7 +663,7 @@ limitations under the License.
 
 ## 📞 联系方式
 
-- **GitHub Issues**: https://github.com/joyapple/DD-CLASS/issues
+- **GitHub Issues**: https://github.com/joyapple/Aniday Class/issues
 - **作者**: joyapple
 
 ---

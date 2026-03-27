@@ -1,8 +1,12 @@
 <template>
-  <div class="attendance">
-    <div class="page-header">
-      <h1 class="page-title">考勤管理</h1>
-      <div>
+  <div class="attendance page-grid">
+    <PageHeader
+      eyebrow="Attendance Ledger"
+      title="考勤管理"
+      subtitle="同时支持日历视图、列表录入、批量设置和分析视图，适合高频班级管理。"
+    >
+      <template #actions>
+        <div class="header-actions">
         <el-select v-model="filterClassId" placeholder="选择班级" clearable style="width: 150px; margin-right: 10px;" @change="loadData">
           <el-option v-for="c in classes" :key="c.id" :label="c.name" :value="c.id" />
         </el-select>
@@ -28,8 +32,9 @@
           <el-icon><Download /></el-icon>
           导出考勤
         </el-button>
-      </div>
-    </div>
+        </div>
+      </template>
+    </PageHeader>
 
     <el-row :gutter="20" style="margin-bottom: 20px;">
       <el-col :span="4">
@@ -97,6 +102,7 @@
     </div>
 
     <div v-else>
+      <DataTableShell>
       <el-table :data="attendances" style="width: 100%" v-loading="loading">
         <el-table-column prop="id" label="ID" width="60" />
         <el-table-column prop="student_name" label="学生" />
@@ -120,6 +126,7 @@
           </template>
         </el-table-column>
       </el-table>
+      </DataTableShell>
     </div>
 
     <el-dialog v-model="dialogVisible" :title="isEdit ? '编辑考勤' : '录入考勤'" width="600px">
@@ -345,6 +352,8 @@ import { Plus, Upload, UploadFilled, DataAnalysis, CircleCheck, Warning, AlarmCl
 import api from '@/api'
 import * as XLSX from 'xlsx'
 import * as echarts from 'echarts'
+import DataTableShell from '@/components/ui/DataTableShell.vue'
+import PageHeader from '@/components/ui/PageHeader.vue'
 
 const attendances = ref([])
 const classes = ref([])
@@ -1156,27 +1165,16 @@ onMounted(async () => {
 </script>
 
 <style scoped>
-.attendance {
-  padding: 20px;
-}
-
 .stat-card {
-  background: white;
-  padding: 20px;
-  border-radius: 8px;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  padding: 1.15rem;
 }
 
 .stat-label {
-  font-size: 14px;
-  color: #909399;
-  margin-bottom: 10px;
+  margin-bottom: 0.65rem;
 }
 
 .stat-value {
-  font-size: 28px;
-  font-weight: bold;
-  color: #409eff;
+  color: var(--color-primary);
 }
 
 .analysis-stat-card {
@@ -1191,7 +1189,7 @@ onMounted(async () => {
 }
 
 .analysis-stat-card:hover {
-  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.15);
+  box-shadow: var(--shadow-card);
   transform: translateY(-2px);
 }
 
@@ -1226,38 +1224,6 @@ onMounted(async () => {
   margin-top: 20px;
 }
 
-.page-header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin-bottom: 20px;
-}
-
-.page-title {
-  margin: 0;
-  font-size: 24px;
-  font-weight: 600;
-}
-
-.stat-card {
-  background: white;
-  padding: 20px;
-  border-radius: 8px;
-  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.1);
-}
-
-.stat-label {
-  font-size: 14px;
-  color: #666;
-  margin-bottom: 8px;
-}
-
-.stat-value {
-  font-size: 28px;
-  font-weight: 600;
-  color: #333;
-}
-
 .calendar-cell {
   height: 100%;
   padding: 5px;
@@ -1279,19 +1245,18 @@ onMounted(async () => {
 }
 
 .student-preview {
-  background: #f5f7fa;
+  background: color-mix(in srgb, var(--surface-subtle) 74%, transparent);
   padding: 10px;
-  border-radius: 4px;
+  border-radius: var(--radius-md);
 }
 
 .student-tags {
   margin-top: 10px;
 }
 
-.table-container {
-  background: white;
-  padding: 20px;
-  border-radius: 8px;
-  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.1);
+.header-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem;
 }
 </style>

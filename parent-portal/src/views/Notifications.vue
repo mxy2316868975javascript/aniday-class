@@ -1,16 +1,16 @@
 <template>
-  <div class="notifications-container">
-    <div class="header">
+  <div class="portal-page">
+    <div class="portal-topbar">
       <el-button text @click="router.push('/home')">
         <el-icon><ArrowLeft /></el-icon>
       </el-button>
       <h2>班级通知</h2>
-      <span class="count">{{ total }}条</span>
+      <span class="portal-muted">{{ total }}条</span>
     </div>
 
-    <div class="notification-list" v-loading="loading">
+    <div class="notification-list portal-list" v-loading="loading">
       <div
-        class="notification-card"
+        class="notification-card portal-list-card"
         v-for="item in notifications"
         :key="item.id"
         @click="viewDetail(item)"
@@ -123,44 +123,11 @@ onMounted(() => {
 </script>
 
 <style scoped>
-.notifications-container {
-  min-height: 100vh;
-  background: #f5f7fa;
-}
-
-.header {
-  background: white;
-  padding: 16px;
-  display: flex;
-  align-items: center;
-  gap: 12px;
-  position: sticky;
-  top: 0;
-  z-index: 10;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
-}
-
-.header h2 {
-  flex: 1;
-  margin: 0;
-  font-size: 18px;
-}
-
-.header .count {
-  font-size: 13px;
-  color: #909399;
-}
-
 .notification-list {
-  padding: 16px;
+  padding: 1rem;
 }
 
 .notification-card {
-  background: white;
-  border-radius: 12px;
-  padding: 16px;
-  margin-bottom: 12px;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
   cursor: pointer;
   transition: transform 0.2s;
 }
@@ -187,20 +154,20 @@ onMounted(() => {
 
 .date {
   font-size: 12px;
-  color: #909399;
+  color: var(--text-secondary);
 }
 
 .title {
   margin: 0 0 8px;
   font-size: 16px;
-  color: #303133;
+  color: var(--text-primary);
   line-height: 1.4;
 }
 
 .creator {
   margin: 0;
   font-size: 13px;
-  color: #909399;
+  color: var(--text-secondary);
 }
 
 .detail-content {

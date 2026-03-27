@@ -1,8 +1,12 @@
 <template>
-  <div class="scores">
-    <div class="page-header">
-      <h1 class="page-title">成绩管理</h1>
-      <div>
+  <div class="scores page-grid">
+    <PageHeader
+      eyebrow="Academic Records"
+      title="成绩管理"
+      subtitle="兼顾日常录入、批量导入与分析视图，保持数据密度与可读性平衡。"
+    >
+      <template #actions>
+        <div class="header-actions">
         <el-select v-model="filterClassId" placeholder="选择班级" clearable style="width: 150px; margin-right: 10px;" @change="loadScores">
           <el-option v-for="c in classes" :key="c.id" :label="c.name" :value="c.id" />
         </el-select>
@@ -28,8 +32,9 @@
           <el-icon><Download /></el-icon>
           导出成绩
         </el-button>
-      </div>
-    </div>
+        </div>
+      </template>
+    </PageHeader>
 
     <div class="statistics-card" v-if="statisticsData">
       <el-row :gutter="20">
@@ -60,7 +65,7 @@
       </el-row>
     </div>
 
-    <div class="table-container">
+    <DataTableShell>
       <el-table :data="scores" style="width: 100%" v-loading="loading">
         <el-table-column prop="id" label="ID" width="60" />
         <el-table-column prop="student_name" label="学生" />
@@ -90,17 +95,18 @@
         </el-table-column>
       </el-table>
       
-      <el-pagination
-        v-model:current-page="page"
-        v-model:page-size="pageSize"
-        :total="total"
-        :page-sizes="[10, 20, 50]"
-        layout="total, sizes, prev, pager, next"
-        @size-change="loadScores"
-        @current-change="loadScores"
-        style="margin-top: 20px; justify-content: flex-end;"
-      />
-    </div>
+      <template #pagination>
+        <el-pagination
+          v-model:current-page="page"
+          v-model:page-size="pageSize"
+          :total="total"
+          :page-sizes="[10, 20, 50]"
+          layout="total, sizes, prev, pager, next"
+          @size-change="loadScores"
+          @current-change="loadScores"
+        />
+      </template>
+    </DataTableShell>
 
     <el-dialog v-model="dialogVisible" :title="isEdit ? '编辑成绩' : '录入成绩'" width="600px">
       <el-form :model="form" :rules="rules" ref="formRef" label-width="100px">
@@ -287,6 +293,8 @@ import { Plus, UploadFilled, Upload, DataAnalysis, Download } from '@element-plu
 import api from '@/api'
 import * as XLSX from 'xlsx'
 import * as echarts from 'echarts'
+import DataTableShell from '@/components/ui/DataTableShell.vue'
+import PageHeader from '@/components/ui/PageHeader.vue'
 
 const scores = ref([])
 const classes = ref([])
@@ -985,46 +993,33 @@ onMounted(async () => {
 </script>
 
 <style scoped>
-.scores {
-  padding: 20px;
-}
-
 .statistics-card {
-  background: white;
-  padding: 20px;
-  border-radius: 4px;
-  margin-bottom: 20px;
+  margin-bottom: var(--space-5);
 }
 
 .stat-item {
   text-align: center;
-  padding: 20px;
-  background: #f5f7fa;
-  border-radius: 8px;
+  padding: 1.2rem;
 }
 
 .stat-label {
-  font-size: 14px;
-  color: #909399;
-  margin-bottom: 10px;
+  margin-bottom: 0.6rem;
 }
 
 .stat-value {
-  font-size: 28px;
-  font-weight: bold;
-  color: #409EFF;
+  color: var(--color-primary);
 }
 
 .stat-value.success {
-  color: #67C23A;
+  color: var(--color-success);
 }
 
 .stat-value.danger {
-  color: #F56C6C;
+  color: var(--color-danger);
 }
 
 .analysis-container {
-  padding: 20px;
+  padding: 0.5rem 0;
 }
 
 .chart-container {
@@ -1035,5 +1030,11 @@ onMounted(async () => {
 
 .detail-stats {
   margin-bottom: 30px;
+}
+
+.header-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem;
 }
 </style>

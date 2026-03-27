@@ -1,16 +1,16 @@
 <template>
-  <div class="homework-container">
-    <div class="header">
+  <div class="portal-page">
+    <div class="portal-topbar">
       <el-button text @click="router.push('/home')">
         <el-icon><ArrowLeft /></el-icon>
       </el-button>
       <h2>班级作业</h2>
-      <span class="count">{{ total }}条</span>
+      <span class="portal-muted">{{ total }}条</span>
     </div>
 
-    <div class="homework-list" v-loading="loading">
+    <div class="homework-list portal-list" v-loading="loading">
       <div
-        class="homework-card"
+        class="homework-card portal-list-card"
         v-for="item in homeworks"
         :key="item.id"
         @click="viewDetail(item)"
@@ -121,44 +121,11 @@ onMounted(() => {
 </script>
 
 <style scoped>
-.homework-container {
-  min-height: 100vh;
-  background: #f5f7fa;
-}
-
-.header {
-  background: white;
-  padding: 16px;
-  display: flex;
-  align-items: center;
-  gap: 12px;
-  position: sticky;
-  top: 0;
-  z-index: 10;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
-}
-
-.header h2 {
-  flex: 1;
-  margin: 0;
-  font-size: 18px;
-}
-
-.header .count {
-  font-size: 13px;
-  color: #909399;
-}
-
 .homework-list {
-  padding: 16px;
+  padding: 1rem;
 }
 
 .homework-card {
-  background: white;
-  border-radius: 12px;
-  padding: 16px;
-  margin-bottom: 12px;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
   cursor: pointer;
   transition: transform 0.2s;
 }
@@ -177,7 +144,7 @@ onMounted(() => {
 .title {
   margin: 0;
   font-size: 16px;
-  color: #303133;
+  color: var(--text-primary);
   line-height: 1.4;
   flex: 1;
   margin-right: 12px;
@@ -188,7 +155,7 @@ onMounted(() => {
   flex-wrap: wrap;
   gap: 12px;
   font-size: 13px;
-  color: #606266;
+  color: var(--text-secondary);
   margin-bottom: 8px;
 }
 
@@ -201,7 +168,7 @@ onMounted(() => {
 .creator {
   margin: 0;
   font-size: 13px;
-  color: #909399;
+  color: var(--text-secondary);
 }
 
 .detail-content {

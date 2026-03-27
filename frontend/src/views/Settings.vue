@@ -31,12 +31,14 @@
         </el-form-item>
 
         <el-form-item label="Bing 每日一图">
-          <el-switch
-            v-model="form.use_bing_background"
-            active-text="启用"
-            inactive-text="禁用"
-          />
-          <div class="form-tip">启用后，登录页面将自动使用 Bing 每日一图作为背景</div>
+          <div class="switch-field">
+            <el-switch
+              v-model="form.use_bing_background"
+              active-text="启用"
+              inactive-text="禁用"
+            />
+            <div class="form-tip">启用后，登录页面将自动使用 Bing 每日一图作为背景</div>
+          </div>
         </el-form-item>
 
         <el-form-item label="登录背景图">
@@ -137,11 +139,11 @@ const imageUrl = ref('')
 const currentUploadField = ref('')
 
 const form = ref({
-  system_name: 'DD-CLASS 班级管理系统',
+  system_name: 'Aniday Class 班级管理系统',
   login_background: '',
   system_logo: '',
   system_intro: '一个现代化的班级管理系统',
-  copyright: '© 2024 DD-CLASS',
+  copyright: '© 2024 Aniday Class',
   use_bing_background: true
 })
 
@@ -169,11 +171,11 @@ const fetchSettings = async () => {
       settingsData[item.setting_key] = item.setting_value
     })
     form.value = {
-      system_name: settingsData.system_name || 'DD-CLASS 班级管理系统',
+      system_name: settingsData.system_name || 'Aniday Class 班级管理系统',
       login_background: settingsData.login_background || '',
       system_logo: settingsData.system_logo || '',
       system_intro: settingsData.system_intro || '一个现代化的班级管理系统',
-      copyright: settingsData.copyright || '© 2024 DD-CLASS',
+      copyright: settingsData.copyright || '© 2024 Aniday Class',
       use_bing_background: settingsData.use_bing_background === 'true'
     }
     originalForm.value = { ...form.value }
@@ -339,8 +341,24 @@ onMounted(() => {
 }
 
 .form-tip {
-  margin-top: 8px;
   font-size: 12px;
   color: #909399;
+  line-height: 1.5;
+}
+
+.switch-field {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 10px 14px;
+  min-height: 32px;
+}
+
+.switch-field :deep(.el-switch) {
+  flex-shrink: 0;
+}
+
+.switch-field .form-tip {
+  margin: 0;
 }
 </style>

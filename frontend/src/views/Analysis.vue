@@ -1,32 +1,33 @@
 <template>
-  <div class="analysis">
-    <div class="page-header">
-      <h1 class="page-title">数据分析</h1>
-      <el-select v-model="semester" placeholder="选择学期" @change="loadData" style="width: 150px;">
-        <el-option label="全部" value="" />
-        <el-option label="2024-1" value="2024-1" />
-        <el-option label="2024-2" value="2024-2" />
-      </el-select>
-    </div>
+  <div class="analysis page-grid">
+    <PageHeader eyebrow="Insight Studio" title="数据分析" subtitle="围绕学期维度观察科目差异、分布区间和考试类型趋势。">
+      <template #actions>
+        <el-select v-model="semester" placeholder="选择学期" @change="loadData" style="width: 150px;">
+          <el-option label="全部" value="" />
+          <el-option label="2024-1" value="2024-1" />
+          <el-option label="2024-2" value="2024-2" />
+        </el-select>
+      </template>
+    </PageHeader>
 
     <el-row :gutter="20">
       <el-col :span="12">
-        <div class="chart-card">
+        <SectionCard title="各科目平均成绩" description="用环形图对比学科整体表现。">
           <h3>各科目平均成绩</h3>
           <div ref="subjectChartRef" style="height: 350px;"></div>
-        </div>
+        </SectionCard>
       </el-col>
       <el-col :span="12">
-        <div class="chart-card">
+        <SectionCard title="成绩分布" description="比较科目最高分、平均分与最低分。">
           <h3>成绩分布</h3>
           <div ref="distributionChartRef" style="height: 350px;"></div>
-        </div>
+        </SectionCard>
       </el-col>
     </el-row>
 
     <el-row :gutter="20" style="margin-top: 20px;">
       <el-col :span="24">
-        <div class="chart-card">
+        <SectionCard title="科目成绩详情" description="查看各科目人数与分值区间。">
           <h3>科目成绩详情</h3>
           <el-table :data="subjectAnalysis" style="width: 100%">
             <el-table-column prop="subject_name" label="科目" />
@@ -35,16 +36,16 @@
             <el-table-column prop="min_score" label="最低分" />
             <el-table-column prop="count" label="考试人数" />
           </el-table>
-        </div>
+        </SectionCard>
       </el-col>
     </el-row>
 
     <el-row :gutter="20" style="margin-top: 20px;">
       <el-col :span="24">
-        <div class="chart-card">
+        <SectionCard title="考试类型趋势" description="用趋势图观察不同考试类型的平均成绩变化。">
           <h3>考试类型趋势</h3>
           <div ref="trendChartRef" style="height: 350px;"></div>
-        </div>
+        </SectionCard>
       </el-col>
     </el-row>
   </div>
@@ -54,6 +55,8 @@
 import { ref, onMounted, watch } from 'vue'
 import * as echarts from 'echarts'
 import api from '@/api'
+import PageHeader from '@/components/ui/PageHeader.vue'
+import SectionCard from '@/components/ui/SectionCard.vue'
 
 const semester = ref('')
 const subjectAnalysis = ref([])
@@ -176,20 +179,7 @@ onMounted(async () => {
 </script>
 
 <style scoped>
-.analysis {
-  padding: 20px;
-}
-
-.chart-card {
-  background: white;
-  border-radius: 8px;
-  padding: 20px;
-  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.1);
-}
-
-.chart-card h3 {
+.analysis :deep(.section-card h3) {
   margin-bottom: 15px;
-  color: #303133;
-  font-size: 16px;
 }
 </style>

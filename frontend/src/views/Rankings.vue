@@ -1,8 +1,8 @@
 <template>
-  <div class="rankings">
-    <div class="page-header">
-      <h1 class="page-title">班级排名</h1>
-      <div>
+  <div class="rankings page-grid">
+    <PageHeader eyebrow="Ranking Matrix" title="班级排名" subtitle="从班级、学生与科目三个视角理解成绩排序与差异。">
+      <template #actions>
+        <div class="header-actions">
         <el-select v-model="semester" placeholder="选择学期" @change="loadData" style="width: 150px; margin-right: 10px;">
           <el-option label="全部" value="" />
           <el-option label="2024-1" value="2024-1" />
@@ -14,12 +14,13 @@
           <el-option label="月考" value="monthly" />
           <el-option label="测验" value="quiz" />
         </el-select>
-      </div>
-    </div>
+        </div>
+      </template>
+    </PageHeader>
 
     <el-row :gutter="20">
       <el-col :span="12">
-        <div class="chart-card">
+        <SectionCard title="班级平均分排名" description="表格与图表联动查看班级整体表现。">
           <h3>班级平均分排名</h3>
           <el-table :data="classRankings" style="width: 100%">
             <el-table-column prop="rank" label="排名" width="80">
@@ -31,10 +32,10 @@
             <el-table-column prop="avg_score" label="平均分" />
           </el-table>
           <div ref="classChartRef" style="height: 300px; margin-top: 20px;"></div>
-        </div>
+        </SectionCard>
       </el-col>
       <el-col :span="12">
-        <div class="chart-card">
+        <SectionCard title="学生成绩排名" description="支持按班级过滤，快速识别头部和尾部学生。">
           <h3>学生成绩排名</h3>
           <el-select v-model="filterClassId" placeholder="选择班级" clearable @change="loadStudentRankings" style="width: 180px; margin-bottom: 10px;">
             <el-option v-for="c in classes" :key="c.id" :label="c.name" :value="c.id" />
@@ -49,13 +50,13 @@
             <el-table-column prop="class_name" label="班级" />
             <el-table-column prop="avg_score" label="平均分" />
           </el-table>
-        </div>
+        </SectionCard>
       </el-col>
     </el-row>
 
     <el-row :gutter="20" style="margin-top: 20px;">
       <el-col :span="24">
-        <div class="chart-card">
+        <SectionCard title="科目排名" description="根据科目查看学生单科表现与考试类型。">
           <h3>科目排名</h3>
           <el-select v-model="selectedSubject" placeholder="选择科目" @change="loadSubjectRankings" style="width: 180px; margin-right: 10px;">
             <el-option v-for="s in subjects" :key="s.id" :label="s.name" :value="s.id" />
@@ -71,7 +72,7 @@
             <el-table-column prop="exam_type" label="考试类型" />
             <el-table-column prop="semester" label="学期" />
           </el-table>
-        </div>
+        </SectionCard>
       </el-col>
     </el-row>
   </div>
@@ -81,6 +82,8 @@
 import { ref, reactive, onMounted, watch } from 'vue'
 import * as echarts from 'echarts'
 import api from '@/api'
+import PageHeader from '@/components/ui/PageHeader.vue'
+import SectionCard from '@/components/ui/SectionCard.vue'
 
 const semester = ref('')
 const examType = ref('')
@@ -186,20 +189,13 @@ onMounted(async () => {
 </script>
 
 <style scoped>
-.rankings {
-  padding: 20px;
+.header-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem;
 }
 
-.chart-card {
-  background: white;
-  border-radius: 8px;
-  padding: 20px;
-  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.1);
-}
-
-.chart-card h3 {
+.rankings :deep(.section-card h3) {
   margin-bottom: 15px;
-  color: #303133;
-  font-size: 16px;
 }
 </style>

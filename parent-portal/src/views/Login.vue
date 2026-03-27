@@ -1,41 +1,45 @@
 <template>
-  <div class="login-container">
-    <div class="login-header">
-      <div class="logo">🎓</div>
-      <h1>家长端口</h1>
-      <p class="subtitle">DD-CLASS 班级管理系统</p>
-    </div>
+  <div class="portal-page parent-login">
+    <section class="portal-hero">
+      <p class="portal-kicker">Parent Access</p>
+      <h1>安心查看孩子的学习进展</h1>
+      <p class="hero-copy">通过班主任提供的 8 位家长码，快速绑定孩子，查看成绩、通知与作业。</p>
+    </section>
 
-    <el-card class="login-card">
-      <el-form :model="form" :rules="rules" ref="formRef" size="large">
-        <el-form-item prop="parentCode">
-          <el-input
-            v-model="form.parentCode"
-            placeholder="请输入8位家长码"
-            maxlength="8"
-            :prefix-icon="Key"
-            @keyup.enter="handleLogin"
-          >
-          </el-input>
-        </el-form-item>
+    <main class="login-main">
+      <div class="portal-card login-card">
+        <div class="login-card-header">
+          <div class="seal">家</div>
+          <div>
+            <p class="portal-kicker portal-muted">Aniday Class Family Portal</p>
+            <h2>绑定孩子</h2>
+          </div>
+        </div>
 
-        <el-form-item>
-          <el-button
-            type="primary"
-            :loading="loading"
-            @click="handleLogin"
-            class="login-btn"
-          >
-            {{ loading ? '验证中...' : '绑定孩子' }}
-          </el-button>
-        </el-form-item>
-      </el-form>
-    </el-card>
+        <el-form :model="form" :rules="rules" ref="formRef" size="large" class="login-form">
+          <el-form-item prop="parentCode">
+            <el-input
+              v-model="form.parentCode"
+              placeholder="请输入8位家长码"
+              maxlength="8"
+              :prefix-icon="Key"
+              @keyup.enter="handleLogin"
+            />
+          </el-form-item>
 
-    <div class="tips">
-      <p>📌 请使用班主任提供的8位家长码</p>
-      <p>❓ 如有疑问请联系学校老师</p>
-    </div>
+          <el-form-item>
+            <el-button type="primary" :loading="loading" @click="handleLogin" class="login-btn">
+              {{ loading ? '验证中...' : '绑定孩子' }}
+            </el-button>
+          </el-form-item>
+        </el-form>
+
+        <div class="tips">
+          <p>请使用班主任提供的 8 位家长码。</p>
+          <p>若绑定失败，请联系学校老师重新生成家长码。</p>
+        </div>
+      </div>
+    </main>
   </div>
 </template>
 
@@ -92,61 +96,65 @@ const handleLogin = async () => {
 </script>
 
 <style scoped>
-.login-container {
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  padding: 20px;
-  background: #409eff;
+.parent-login {
+  display: grid;
+  align-content: start;
 }
 
-.login-header {
-  text-align: center;
-  margin-bottom: 30px;
-  color: white;
+.hero-copy {
+  margin-top: 0.65rem;
+  max-width: 24rem;
+  color: rgba(248, 244, 236, 0.84);
+  line-height: 1.7;
 }
 
-.logo {
-  font-size: 64px;
-  margin-bottom: 10px;
-}
-
-.login-header h1 {
-  font-size: 28px;
-  margin: 10px 0;
-  text-shadow: 0 2px 4px rgba(0,0,0,0.1);
-}
-
-.subtitle {
-  font-size: 14px;
-  opacity: 0.9;
+.login-main {
+  padding: 1rem;
+  margin-top: -2rem;
 }
 
 .login-card {
-  border-radius: 16px;
-  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.2);
+  padding: 1.2rem;
 }
 
-.login-card :deep(.el-form-item) {
-  margin-bottom: 24px;
+.login-card-header {
+  display: flex;
+  align-items: center;
+  gap: 0.9rem;
+  margin-bottom: 1.1rem;
+}
+
+.seal {
+  width: 3rem;
+  height: 3rem;
+  display: grid;
+  place-items: center;
+  border-radius: 1rem;
+  background: linear-gradient(145deg, color-mix(in srgb, var(--color-accent) 62%, white 38%) 0%, color-mix(in srgb, var(--color-primary) 78%, black 22%) 100%);
+  color: var(--text-inverse);
+  font-family: var(--portal-font-display);
+  font-size: 1.2rem;
+}
+
+.login-card-header h2 {
+  margin: 0.2rem 0 0;
+  font-family: var(--portal-font-display);
 }
 
 .login-btn {
   width: 100%;
-  height: 48px;
-  font-size: 16px;
-  border-radius: 24px;
+  min-height: 3rem;
 }
 
 .tips {
-  margin-top: 30px;
-  text-align: center;
-  color: rgba(255, 255, 255, 0.9);
-  font-size: 13px;
+  display: grid;
+  gap: 0.45rem;
+  color: var(--text-secondary);
+  font-size: 0.92rem;
+  line-height: 1.7;
 }
 
 .tips p {
-  margin: 8px 0;
+  margin: 0;
 }
 </style>

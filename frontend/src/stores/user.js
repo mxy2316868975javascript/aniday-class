@@ -2,10 +2,29 @@ import { defineStore } from 'pinia'
 import { ref, computed } from 'vue'
 import api from '@/api'
 
+function readStoredJSON(key) {
+  const raw = localStorage.getItem(key)
+
+  if (!raw || raw === 'undefined' || raw === 'null') {
+    if (raw === 'undefined') {
+      localStorage.removeItem(key)
+    }
+    return null
+  }
+
+  try {
+    return JSON.parse(raw)
+  } catch (error) {
+    console.warn(`忽略损坏的本地缓存: ${key}`, error)
+    localStorage.removeItem(key)
+    return null
+  }
+}
+
 export const useUserStore = defineStore('user', () => {
   const token = ref(localStorage.getItem('token') || '')
-  const userInfo = ref(JSON.parse(localStorage.getItem('user') || 'null'))
-  const systemSettings = ref(JSON.parse(localStorage.getItem('system_settings') || 'null'))
+  const userInfo = ref(readStoredJSON('user'))
+  const systemSettings = ref(readStoredJSON('system_settings'))
 
   const isLoggedIn = computed(() => !!token.value)
   const isAdmin = computed(() => userInfo.value?.role === 'admin')

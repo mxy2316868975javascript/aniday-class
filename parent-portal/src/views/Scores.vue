@@ -1,12 +1,12 @@
 <template>
-  <div class="scores-container">
-    <div class="header">
+  <div class="portal-page">
+    <div class="portal-topbar">
       <el-button text @click="router.push('/home')">
         <el-icon><ArrowLeft /></el-icon>
       </el-button>
       <h2>成绩查询</h2>
     </div>
-    <div class="filter-row">
+    <div class="portal-card filter-row">
       <el-select v-model="semester" placeholder="选择学期" @change="fetchScores" size="default" style="width: 100%;">
         <el-option label="全部学期" value="" />
         <el-option label="2025-2" value="2025-2" />
@@ -16,22 +16,22 @@
       </el-select>
     </div>
 
-    <div class="stats-row">
-      <div class="stat-item">
+    <div class="stats-row portal-actions-grid">
+      <div class="portal-stat stat-item">
         <span class="value">{{ totalExams }}</span>
         <span class="label">考试次数</span>
       </div>
-      <div class="stat-item">
+      <div class="portal-stat stat-item">
         <span class="value">{{ averageScore }}</span>
         <span class="label">平均成绩</span>
       </div>
     </div>
 
-    <div class="score-list" v-loading="loading">
-      <div class="score-card" v-for="item in scores" :key="item.id">
+    <div class="score-list portal-list" v-loading="loading">
+      <div class="score-card portal-list-card" v-for="item in scores" :key="item.id">
         <div class="score-header">
           <span class="subject">{{ item.subject_name }}</span>
-          <el-tag size="small" :type="getScoreType(item.score)">{{ item.score }}</el-tag>
+          <span class="portal-score-chip">{{ item.score }}</span>
         </div>
         <div class="score-info">
           <span>{{ getExamTypeText(item.exam_type) }}</span>
@@ -120,83 +120,40 @@ onMounted(() => {
 </script>
 
 <style scoped>
-.scores-container {
-  min-height: 100vh;
-  background: #f5f7fa;
-}
-
-.header {
-  background: white;
-  padding: 16px;
-  display: flex;
-  align-items: center;
-  gap: 12px;
-  position: sticky;
-  top: 0;
-  z-index: 10;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
-}
-
-.header h2 {
-  margin: 0;
-  font-size: 18px;
-}
-
 .filter-row {
-  background: white;
-  padding: 0 16px 16px;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
+  margin: 1rem;
 }
 
 .stats-row {
-  display: flex;
-  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-  padding: 24px 20px;
-  margin-top: 0;
+  margin: 0 1rem 1rem;
 }
 
 .stat-item {
-  flex: 1;
   display: flex;
   flex-direction: column;
   align-items: center;
-  color: white;
-  position: relative;
-}
-
-.stat-item:first-child::after {
-  content: '';
-  position: absolute;
-  right: 0;
-  top: 50%;
-  transform: translateY(-50%);
-  width: 1px;
-  height: 40px;
-  background: rgba(255, 255, 255, 0.3);
+  justify-content: center;
+  min-height: 6.8rem;
 }
 
 .stat-item .value {
-  font-size: 32px;
-  font-weight: bold;
-  line-height: 1.2;
+  font-size: 2rem;
+  font-weight: 700;
+  color: var(--text-primary);
 }
 
 .stat-item .label {
-  font-size: 14px;
-  opacity: 0.9;
+  font-size: 0.92rem;
+  color: var(--text-secondary);
   margin-top: 6px;
 }
 
 .score-list {
-  padding: 16px;
+  padding: 0 1rem 1rem;
 }
 
 .score-card {
-  background: white;
-  border-radius: 12px;
-  padding: 16px;
-  margin-bottom: 12px;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
+  margin-bottom: 0;
 }
 
 .score-header {
@@ -208,14 +165,14 @@ onMounted(() => {
 
 .score-header .subject {
   font-size: 16px;
-  font-weight: 500;
-  color: #303133;
+  font-weight: 600;
+  color: var(--text-primary);
 }
 
 .score-info {
   display: flex;
   gap: 16px;
   font-size: 13px;
-  color: #909399;
+  color: var(--text-secondary);
 }
 </style>
