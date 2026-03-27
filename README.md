@@ -7,8 +7,8 @@
 ![Vue.js](https://img.shields.io/badge/Vue.js-3.4+-42b883.svg)
 ![PostgreSQL](https://img.shields.io/badge/PostgreSQL-14+-336791.svg)
 ![License](https://img.shields.io/badge/License-Apache--2.0-blue.svg)
-[![Stars](https://img.shields.io/github/stars/joyapple/Aniday Class?style=social)](https://github.com/joyapple/Aniday Class/stargazers)
-[![Forks](https://img.shields.io/github/forks/joyapple/Aniday Class?style=social)](https://github.com/joyapple/Aniday Class/network/members)
+[![Stars](https://img.shields.io/github/stars/mxy2316868975javascript/aniday-class?style=social)](https://github.com/mxy2316868975javascript/aniday-class/stargazers)
+[![Forks](https://img.shields.io/github/forks/mxy2316868975javascript/aniday-class?style=social)](https://github.com/mxy2316868975javascript/aniday-class/network/members)
 
 ---
 
@@ -18,8 +18,8 @@
 
 您的支持是我们继续开发和维护这个项目的最大动力！
 
-[![Star](https://img.shields.io/github/stars/joyapple/Aniday Class?style=for-the-badge)](https://github.com/joyapple/Aniday Class/stargazers)
-[![Fork](https://img.shields.io/github/forks/joyapple/Aniday Class?style=for-the-badge)](https://github.com/joyapple/Aniday Class/network/members)
+[![Star](https://img.shields.io/github/stars/mxy2316868975javascript/aniday-class?style=for-the-badge)](https://github.com/mxy2316868975javascript/aniday-class/stargazers)
+[![Fork](https://img.shields.io/github/forks/mxy2316868975javascript/aniday-class?style=for-the-badge)](https://github.com/mxy2316868975javascript/aniday-class/network/members)
 
 ---
 
@@ -197,8 +197,8 @@
 ### 1. 克隆项目
 
 ```bash
-git clone https://github.com/joyapple/Aniday Class.git
-cd Aniday Class
+git clone https://github.com/mxy2316868975javascript/aniday-class.git
+cd aniday-class
 ```
 
 ### 2. 启动后端
@@ -663,8 +663,8 @@ limitations under the License.
 
 ## 📞 联系方式
 
-- **GitHub Issues**: https://github.com/joyapple/Aniday Class/issues
-- **作者**: joyapple
+- **GitHub Issues**: https://github.com/mxy2316868975javascript/aniday-class/issues
+- **项目仓库**: https://github.com/mxy2316868975javascript/aniday-class
 
 ---
 
@@ -693,4 +693,4 @@ limitations under the License.
 
 ---
 
-**Made with ❤️ by [joyapple](https://github.com/joyapple)**
+**Made with ❤️ for [aniday-class](https://github.com/mxy2316868975javascript/aniday-class)**
